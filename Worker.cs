@@ -1,3 +1,5 @@
+using SmartRealms;
+
 namespace SmartHouseIntelligenceSystem
 {
     //public class Worker : BackgroundService
@@ -30,10 +32,10 @@ namespace SmartHouseIntelligenceSystem
         private readonly ILogger<TimedHostedService> _logger;
         private Timer? _timer = null;
 
-        //public TimedHostedService(ILogger<TimedHostedService> logger)
-        //{
-        //    _logger = logger;
-        //}
+        public TimedHostedService(ILogger<TimedHostedService> logger)
+        {
+            _logger = logger;
+        }
 
         public Task StartAsync(CancellationToken stoppingToken)
         {
@@ -69,4 +71,9 @@ namespace SmartHouseIntelligenceSystem
     }
 }
 
-
+//namespace SmartRealms
+//{
+//    class TimedHostedService
+//    {
+//    }
+//}
