@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartRealms.API", "SmartRealms.API\SmartRealms.API.csproj", "{1272F7A1-91A2-43AF-8B26-D995DE837B5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartRealms.API", "SmartRealms.API\SmartRealms.API.csproj", "{1272F7A1-91A2-43AF-8B26-D995DE837B5E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartRealms.MQTT", "SmartRealms.MQTT\SmartRealms.MQTT.csproj", "{8FC9645D-F6EE-415F-9FC3-62676052E538}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{1272F7A1-91A2-43AF-8B26-D995DE837B5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1272F7A1-91A2-43AF-8B26-D995DE837B5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1272F7A1-91A2-43AF-8B26-D995DE837B5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FC9645D-F6EE-415F-9FC3-62676052E538}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FC9645D-F6EE-415F-9FC3-62676052E538}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FC9645D-F6EE-415F-9FC3-62676052E538}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FC9645D-F6EE-415F-9FC3-62676052E538}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

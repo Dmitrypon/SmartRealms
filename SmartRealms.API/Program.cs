@@ -14,6 +14,9 @@ namespace SmartRealms.API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddHostedService<Consumer>();
+            builder.Services.AddHostedService<Producer>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
