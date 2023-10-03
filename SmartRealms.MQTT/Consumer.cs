@@ -2,9 +2,9 @@
 {
     public class Consumer : BackgroundService
     {
-        private readonly ILogger<Consumer> _logger;
+        private readonly ILogger<Producer> _logger;
 
-        public Consumer(ILogger<Consumer> logger)
+        public Consumer(ILogger<Producer> logger)
         {
             _logger = logger;
         }

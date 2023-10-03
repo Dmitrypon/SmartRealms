@@ -1,5 +1,6 @@
 using MQTTnet.AspNetCore;
-using SolutionName.MQTT;
+//using SolutionName.MQTT;
+
 
 namespace SmartRealms.MQTT
 {
