@@ -1,13 +1,22 @@
 //using MQTTnet.AspNetCore;
 //using SolutionName.MQTT;
 
+using Microsoft.AspNetCore.Connections;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+using System.Text;
+
 namespace SmartRealms.API
 {
     public class Program
     {
         public static void Main(string[] args)
         {
-            var builder = WebApplication.CreateBuilder(args);
+
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+
+        var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
 
@@ -38,4 +47,5 @@ namespace SmartRealms.API
             app.Run();
         }
     }
+
 }
