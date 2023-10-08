@@ -9,11 +9,7 @@ namespace SmartRealms.MQTT
     {
         public static void Main(string[] args)
         {
-            //    //var factory = new ConnectionFactory() { HostName = "localhost" };
-            //    //var connection = factory.CreateConnection();
-
-            //    var builder = WebApplication.CreateBuilder(args);
-
+          
             //    //// Add services to the container.
 
             //    //builder.Services.AddControllers();
@@ -110,15 +106,15 @@ namespace SmartRealms.MQTT
                                      arguments: null);
 
                 int index = 1;
-                while (index <= 99999)
+                while (index <= 999)
                 {
                     // we need to write data in the form of bytes
-                    string message = $"{index}|SuperRabbit{10000 + index}|1Carrot,2Carrot,3Carrot,4Carrot|1|{DateTime.UtcNow.ToLongDateString()}|0|0";
+                    string message = $"{index}|SuperRabbit{1000 + index}|1Carrot,2Carrot,3Carrot,4Carrot|1|{DateTime.UtcNow.ToLongDateString()}|0|0";
                     var body = Encoding.UTF8.GetBytes(message);
 
                     // push content into the queue 
                     channel.BasicPublish(exchange: "", routingKey: "queque", basicProperties: null, body: body);
-                    Console.WriteLine(" [x] Sent {0}", message); index++; Thread.Sleep(10000);
+                    Console.WriteLine(" [x] Sent {0}", message); index++; Thread.Sleep(1000);
                 }
             }
 

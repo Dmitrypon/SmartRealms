@@ -1,4 +1,8 @@
-﻿namespace SmartRealms.MQTT
+﻿using RabbitMQ.Client.Events;
+using RabbitMQ.Client;
+using System.Text;
+
+namespace SmartRealms.MQTT
 {
     public class Consumer : BackgroundService
     {
@@ -18,4 +22,9 @@
             }
         }
     }
+
+
 }
+    
+
+
