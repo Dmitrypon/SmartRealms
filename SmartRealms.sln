@@ -7,10 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartRealms.API", "SmartRea
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartRealms.MQTT", "SmartRealms.MQTT\SmartRealms.MQTT.csproj", "{8FC9645D-F6EE-415F-9FC3-62676052E538}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Receiver", "Receiver\Receiver.csproj", "{326C8FAC-4119-47A4-A692-B5AF04CD7F95}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Publisher", "Publisher\Publisher.csproj", "{FA080803-FFEA-4495-B6FA-9F7688175F87}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,14 +21,6 @@ Global
 		{8FC9645D-F6EE-415F-9FC3-62676052E538}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FC9645D-F6EE-415F-9FC3-62676052E538}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8FC9645D-F6EE-415F-9FC3-62676052E538}.Release|Any CPU.Build.0 = Release|Any CPU
-		{326C8FAC-4119-47A4-A692-B5AF04CD7F95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{326C8FAC-4119-47A4-A692-B5AF04CD7F95}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{326C8FAC-4119-47A4-A692-B5AF04CD7F95}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{326C8FAC-4119-47A4-A692-B5AF04CD7F95}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FA080803-FFEA-4495-B6FA-9F7688175F87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FA080803-FFEA-4495-B6FA-9F7688175F87}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FA080803-FFEA-4495-B6FA-9F7688175F87}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FA080803-FFEA-4495-B6FA-9F7688175F87}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
