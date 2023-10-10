@@ -4,11 +4,11 @@ using SmartRealms.MQTT.RabbitMQ;
 
 [Route("api/[controller]")]
 [ApiController]
-public class RabbitMqController : ControllerBase
+public class RabbitMQController : ControllerBase
 {
     private readonly IRabbitMqService _mqService;
 
-    public RabbitMqController(IRabbitMqService mqService)
+    public RabbitMQController(IRabbitMqService mqService)
     {
         _mqService = mqService;
     }
