@@ -68,7 +68,6 @@ namespace SmartRealms.MQTT
 
             //app.UseAuthorization();
 
-
             //app.MapControllers();
 
             app.UseRouting();
@@ -96,43 +95,8 @@ namespace SmartRealms.MQTT
             app.Run();
 
         }
-
-        //specify the MQ server we're connecting to
-        //     in our case its localhost since we're running
-        //     in a local docker container
-
-
-            //var factory = new ConnectionFactory() { HostName = "localhost" };
-
-        //// 1. create connection
-        //using (var connection = factory.CreateConnection())
-
-        //// 2. create channel
-        //using (var channel = connection.CreateModel())
-        //{
-        //    // 3. connect to the queue
-        //    channel.QueueDeclare(queue: "queue",
-        //                         durable: false,
-        //                         exclusive: false,
-        //                         autoDelete: false,
-        //                         arguments: null);
-
-        //    int index = 1;
-        //    while (index <= 999)
-        //    {
-        //        // we need to write data in the form of bytes
-        //        string message = $"{index}|SuperRabbit{1000 + index}|1Carrot,2Carrot,3Carrot,4Carrot|1|{DateTime.UtcNow.ToLongDateString()}|0|0";
-        //        var body = Encoding.UTF8.GetBytes(message);
-
-        //        // push content into the queue 
-        //        channel.BasicPublish(exchange: "", routingKey: "queue", basicProperties: null, body: body);
-        //        Console.WriteLine(" [x] Sent {0}", message); index++; Thread.Sleep(1000);
-        //    }
-        //}
-
-
-        }
-
     }
+
+}
 
 
