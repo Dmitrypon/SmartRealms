@@ -30,11 +30,11 @@ namespace SmartRealms.MQTT
             builder.WebHost.ConfigureKestrel(options =>
             {
                 // This will allow MQTT connections based on TCP port 1883.
-                options.ListenAnyIP(1883, l => l.UseMqtt());
+                options.ListenAnyIP(1884, l => l.UseMqtt());
 
                 // This will allow MQTT connections based on HTTP WebSockets with URI "localhost:5000/mqtt"
                 // See code below for URI configuration.
-                options.ListenAnyIP(5000); // Default HTTP pipeline
+                options.ListenAnyIP(5001); // Default HTTP pipeline
             });
 
             builder.Services.AddEndpointsApiExplorer();
