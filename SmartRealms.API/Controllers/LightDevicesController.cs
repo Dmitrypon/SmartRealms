@@ -17,30 +17,30 @@ namespace SmartRealms.API.Controllers
             }
 
             [HttpGet("{id}")]
-            public async Task<ActionResult<DataDto>> Get(int id)
-            {
-                var data = await _repository.GetLastDataAsync(id, HttpContext.RequestAborted);
-                if (data == null) return NotFound(id);
-                return Ok(new DataDto(data));
-            }
+            //public async Task<ActionResult<DataDto>> Get(int id, DataDto dataDto)
+            //{
+            //    var data = await _repository.GetLastDataAsync(id, HttpContext.RequestAborted);
+            //    if (data == null) return NotFound(id);
+            //    return Ok(dataDto(data));
+            //}
 
         }
 
-        public sealed class DataDto
+        public static class DataDto
         {
-            private object data;
+            private static readonly object data;
 
-            public string Name { get; set; }
-            public double Value { get; set; }
-            public DateTimeOffset Registered { get; set; }
-            public int DeviceId { get; set; }
+            public static string Name { get; set; }
+            public static double Value { get; set; }
+            public static DateTimeOffset Registered { get; set; }
+            public static int DeviceId { get; set; }
 
-            public DataDto() { }
+            //public DataDto() { }
 
-            public DataDto(object data)
-            {
-                this.data = data;
-            }            
+            //public DataDto(object data)
+            //{
+            //    this.data = data;
+            //}            
         }
     }
 }
