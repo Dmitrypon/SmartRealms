@@ -1,48 +1,38 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using SmartRealms.API.DTO;
 using SmartRealms.API.Repositories;
+using System.Diagnostics.Contracts;
 
 namespace SmartRealms.API.Controllers
 {
-    public partial class LightDevicesController
-    {
+        // [Route]
         [ApiController]
-        [Route("api/[controller]")]
-        
-        public class DataController : ControllerBase
+        [Authorize]
+        public class LightDeviceController : ControllerBase
         {
-            private readonly CommandDataRepository _repository;
-             
-            public DataController(CommandDataRepository repository)
-            {
-                _repository = repository;
-            }
+        private readonly ILogger<LightDeviceController> _logger;
+        private readonly DevicesRepository _devices;
+        private readonly SchedulesRepository _schedules;
 
-            //[HttpGet("{id}")]
-            //public async Task<ActionResult<DataDto>> Get(int id, DataDto dataDto)
-            //{
-            //    var data = await _repository.GetLastDataAsync(id, HttpContext.RequestAborted);
-            //    if (data == null) return NotFound(id);
-            //    return Ok(dataDto(data));
-            //}
-
-
-
-            public static class DataDto
-            {
-                private static readonly object data;
-
-                public static string Name { get; set; }
-                public static double Value { get; set; }
-                public static DateTimeOffset Registered { get; set; }
-                public static int DeviceId { get; set; }
-
-                //public DataDto() { }
-
-                //public DataDto(object data)
-                //{
-                //    this.data = data;
-                //}            
-            }
+        public LightDeviceController(ILogger<LightDeviceController> logger, DevicesRepository devices, SchedulesRepository schedules)
+        {
+            // ILogger<LightDeviceController> logger;
+            _logger = logger;
+            _devices = devices;
+            _schedules = schedules;
         }
+
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DTO.DeviceDTO))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //public IActionResult Get()
+        //{
+            
+        //}
+
+
     }
+
+    }  
 }
