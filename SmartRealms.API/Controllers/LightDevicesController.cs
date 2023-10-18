@@ -5,8 +5,9 @@ namespace SmartRealms.API.Controllers
 {
     public partial class LightDevicesController
     {
-        [Route("api/[controller]")]
         [ApiController]
+        [Route("api/[controller]")]
+        
         public class DataController : ControllerBase
         {
             private readonly CommandDataRepository _repository;

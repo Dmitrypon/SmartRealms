@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "SmartRealms.MQTT": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:61672;http://localhost:61674"
+    }
+  }
+}
