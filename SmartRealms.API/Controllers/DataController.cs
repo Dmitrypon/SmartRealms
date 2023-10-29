@@ -17,13 +17,21 @@ namespace SmartRealms.API.Controllers
             }
 
             [HttpGet("{id}")]
-            //public async Task<ActionResult<DataDto>> Get(int id, DataDto dataDto)
-            //{
-            //    var data = await _repository.GetLastDataAsync(id, HttpContext.RequestAborted);
-            //    if (data == null) return NotFound(id);
-            //    return Ok(dataDto(data));
-            //}
+            public async Task<ActionResult<DeviceDto>> Get(int id, DeviceDto dataDto)
+            {
+                var data = await _repository.GetLastDataAsync(id, HttpContext.RequestAborted);
+                if (data == null) return NotFound(id);
+                return Ok(DeviceDto);
+             }
 
+            private object? DeviceDto(object data)
+            {
+                throw new NotImplementedException();
+            }
         }
+    }
+
+    public class DeviceDto
+    {
     }
 }

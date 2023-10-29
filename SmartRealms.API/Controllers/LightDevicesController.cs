@@ -6,11 +6,11 @@ using System.Diagnostics.Contracts;
 
 namespace SmartRealms.API.Controllers
 {
-        // [Route]
-        [ApiController]
-        [Authorize]
-        public class LightDeviceController : ControllerBase
-        {
+    // [Route]
+    [ApiController]
+    [Authorize]
+    public class LightDeviceController : ControllerBase
+    {
         private readonly ILogger<LightDeviceController> _logger;
         private readonly DevicesRepository _devices;
         private readonly SchedulesRepository _schedules;
@@ -26,13 +26,11 @@ namespace SmartRealms.API.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DTO.DeviceDTO))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        //public IActionResult Get()
-        //{
-            
-        //}
+
 
 
     }
 
-    }  
 }
+
+
