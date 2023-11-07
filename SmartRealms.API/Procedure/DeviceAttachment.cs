@@ -1,8 +1,12 @@
 ﻿using SmartRealms.API.Enums;
+using System.ComponentModel.DataAnnotations;
 
-namespace SmartRealms.API.Model
+namespace SmartRealms.API.Procedure
 {
-    public class Device
+    /// <summary>
+    /// Procedure of adding a device
+    /// </summary>
+    public class DeviceAttachment
     {
         public int Id { get; set; }
 
@@ -13,6 +17,5 @@ namespace SmartRealms.API.Model
         public string Serial { get; set; }
 
         public DeviceType Type { get; set; }
-
     }
 }

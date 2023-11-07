@@ -1,6 +1,9 @@
 ﻿namespace SmartRealms.API.Enums
 {
-    public class DeviceState
+    public enum DeviceState
     {
+        Unknown,
+        Offline,
+        Online
     }
 }

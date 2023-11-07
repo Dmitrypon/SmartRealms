@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Reflection.Emit;
 using System.Text.RegularExpressions;
 
-namespace SmartRealms.API.Infrastructure.DbContext
+namespace SmartRealms.API.Infrastructure.Context
 {    
     public class DevicesContext : DbContext
     {
