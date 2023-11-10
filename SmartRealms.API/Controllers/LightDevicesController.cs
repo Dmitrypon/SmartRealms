@@ -9,6 +9,8 @@ using System.Net;
 using System.Text;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using SmartRealms.API.Procedure;
+using Microsoft.Azure.Cosmos;
+using TechTalk.SpecFlow.Assist;
 
 namespace SmartRealms.API.Controllers
 {
@@ -38,7 +40,7 @@ namespace SmartRealms.API.Controllers
         public async Task<IActionResult> Create([FromBody] DeviceAttachment request)
         {
             var userId = LocationId.Value;
-            var result = await _service.Create(request.FrontSide, request.BackSide, userId);
+            var result = await _service.Create(request.ProjectId, request.Id, userId);
             if (result.IsFailure)
             {
                 _logger.LogError("{errors}", result.Error);
@@ -50,107 +52,60 @@ namespace SmartRealms.API.Controllers
             return Ok(result.Value);
         }
 
-        private async Task<List<Device>> GetItemsByIdsAsync(int projectId, string ids)
-        {
-            var numIds = ids.Split(',').Select(id => (Ok: int.TryParse(id, out int x), Value: x));
-
-            if (!numIds.All(nid => nid.Ok))
-            {
-                return new List<Device>();
-            }
-
-            var idsToSelect = numIds
-                .Select(id => id.Value);
-
-            var items = await _devices.GetItemsByIdsAsync(projectId, idsToSelect);
-
-            return items;        
-        }
-
         [HttpGet]
-        [Route("{deviceId:int}")]
-        [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        [ProducesResponseType(typeof(DeviceDTO), (int)HttpStatusCode.OK)]
-        private async Task<ActionResult<DeviceDTO>> ItemByIdAsync(int deviceId)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Procedure.GetDeviceResponse[]))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Get()
         {
-            if (deviceId <= 0)
+            var userId = LocationId.Value;
+            var cachCards = await _cache.GetData<Device[]?>($"{Id}-cards");
+            if (cachCards is not null)
             {
-                return BadRequest();
+                return Ok(_mapper.Map<Device[], Procedure.GetDeviceResponse[]>(cachCards));
             }
 
-            var item = await _devices.GetAsync(deviceId);
+            var cards = await _service.Get(userId);
+            await _cache.SetData<Device[]?>($"{locationId}-cards", cards, DateTime.Now.AddMinutes(5));
 
-            if (item != null)
-            {
-                return new DeviceDTO(item);
-            }
-
-            return NotFound();
+            return Ok(_mapper.Map<Device[], Procedure.GetDeviceResponse[]>(cards));
         }
 
-        [HttpPut]
-        [Route("{deviceId:int}")]
-        [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        [ProducesResponseType((int)HttpStatusCode.Created)]
-        public async Task<ActionResult> UpdateDevicesAsync([FromRoute] int deviceId, [FromBody] DeviceDTO deviceToUpdate)
+        
+        [HttpDelete("{deviceId:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Delete([FromRoute] int cardId)
         {
-            if (deviceId != deviceToUpdate.Id)
+            var userId = LocationId.Value;
+            var result = await _service.Delete(cardId);
+            if (result.IsFailure)
             {
-                return UnprocessableEntity(new { error = "Invalid device" });
+                _logger.LogError("{errors}", result.Error);
+                return BadRequest(result.Error);
             }
 
-            var device = await _devices.GetAsync(deviceToUpdate.Id.Value);
+            await _cache.RemoveData($"{userId}-cards");
 
-            if (device == null)
-            {
-                return NotFound(new { message = $"Item with id {deviceToUpdate.Id} not found." });
-            }
-           
-            var data = device.Data;
-           
-            }
-        [HttpDelete]
-        [ProducesResponseType((int)HttpStatusCode.NoContent)]
-        [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public async Task<ActionResult> DeleteDeviceAsync(int deviceId)
-        {
-            var device = await _devices.GetAsync(deviceId);
-
-            if (device == null)
-            {
-                return NotFound();
-            }
-            var serial = device.Serial;
-            if (string.IsNullOrWhiteSpace(device.NodeSerial))
-            {
-                var children = await _devices.GetByNodeAsync(device.Serial);
-                foreach (var child in children)
-                {
-                    await _devices.Delete(child);
-                }
-            }
-            await _devices.Delete(device);
-            
-            return Ok(new { done = true });
+            return Ok(result.Value);
         }
 
-            private async Task<List<Device>> GetItemsByIdsAsync(int projectId, string ids)
+        
+        [HttpPut("{deviceId:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Update([FromRoute] int deviceId, [FromBody]  device)
+        {
+            var userId = LocationId.Value;
+            var result = await _service.Update(deviceId, device., device);
+            if (result.IsFailure)
             {
-                var numIds = ids.Split(',').Select(id => (Ok: int.TryParse(id, out int x), Value: x));
-
-                if (!numIds.All(nid => nid.Ok))
-                {
-                    return new List<Device>();
-                }
-
-                var idsToSelect = numIds
-                    .Select(id => id.Value);
-
-                var items = await _devices.GetItemsByIdsAsync(projectId, idsToSelect);
-
-                return items;
+                _logger.LogError("{errors}", result.Error);
+                return BadRequest(result.Error);
             }
+
+            await _cache.RemoveData($"{deviceId}-cards");
+
+            return Ok(result.Value);
         }
 
     }
