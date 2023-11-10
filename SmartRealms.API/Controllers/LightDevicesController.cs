@@ -8,6 +8,7 @@ using SmartRealms.API.Model;
 using System.Net;
 using System.Text;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using SmartRealms.API.Procedure;
 
 namespace SmartRealms.API.Controllers
 {
@@ -34,9 +35,9 @@ namespace SmartRealms.API.Controllers
        // [ProducesResponseType(typeof(<Device>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(IEnumerable<DeviceDTO>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> Create([FromBody] CreateCardRequest request)
+        public async Task<IActionResult> Create([FromBody] DeviceAttachment request)
         {
-            var userId = UserId.Value;
+            var userId = LocationId.Value;
             var result = await _service.Create(request.FrontSide, request.BackSide, userId);
             if (result.IsFailure)
             {
