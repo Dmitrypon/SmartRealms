@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using SmartRealms.API.Model;
 using System.Net;
 using System.Text;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
+//using Microsoft.AspNetCore.Mvc.Infrastructure;
 using SmartRealms.API.Procedure;
 using Microsoft.Azure.Cosmos;
 using TechTalk.SpecFlow.Assist;
+using SmartRealms.API.SpaceDevices.Domain.Interfaces;
+using SmartRealms.API.SpaceDevices.Domain.Model;
 
 namespace SmartRealms.API.Controllers
 {
@@ -20,34 +22,34 @@ namespace SmartRealms.API.Controllers
     public class LightDeviceController : ControllerBase
     {
         private readonly ILogger<LightDeviceController> _logger;
-        private readonly DevicesRepository _devices;
-        private readonly SchedulesRepository _schedules;
-        private readonly IMapper _mapper;
-        private object devices;
+        private readonly IDevicesService _service;
+        private readonly IMapper _mapper;        
 
-        public LightDeviceController(ILogger<LightDeviceController> logger, DevicesRepository devices, SchedulesRepository schedules, IMapper mapper)
-        {
-            // ILogger<LightDeviceController> logger;
+        public LightDeviceController(
+        
+            ILogger<LightDeviceController> logger,
+            IDevicesService service,
+            IMapper mapper)
+        { 
             _logger = logger;
-            _devices = devices;
-            _schedules = schedules;
+            _service = service;   
+            _mapper = mapper;            
         }
 
         [HttpPost]
-       // [ProducesResponseType(typeof(<Device>), (int)HttpStatusCode.OK)]
-        [ProducesResponseType(typeof(IEnumerable<DeviceDTO>), (int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> Create([FromBody] DeviceAttachment request)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Create([FromBody] DeviceCreateRequest request)
         {
-            var userId = LocationId.Value;
-            var result = await _service.Create(request.ProjectId, request.Id, userId);
+            var userId = UserId.Value;
+            var result = await _service.Create(request.LocationId, request.Id, userId);
             if (result.IsFailure)
             {
                 _logger.LogError("{errors}", result.Error);
                 return BadRequest(result.Error);
             }
 
-            await _cache.RemoveData($"{userId}-cards");
+            await _cache.RemoveData($"{userId}-devices");
 
             return Ok(result.Value);
         }
@@ -57,15 +59,15 @@ namespace SmartRealms.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Get()
         {
-            var userId = LocationId.Value;
-            var cachCards = await _cache.GetData<Device[]?>($"{Id}-cards");
+            var userId = UserId.Value;
+            var cachCards = await _cache.GetData<Device[]?>($"{Id}-devices");
             if (cachCards is not null)
             {
                 return Ok(_mapper.Map<Device[], Procedure.GetDeviceResponse[]>(cachCards));
             }
 
             var cards = await _service.Get(userId);
-            await _cache.SetData<Device[]?>($"{locationId}-cards", cards, DateTime.Now.AddMinutes(5));
+            await _cache.SetData<Device[]?>($"{userId}-devices", cards, DateTime.Now.AddMinutes(5));
 
             return Ok(_mapper.Map<Device[], Procedure.GetDeviceResponse[]>(cards));
         }
@@ -84,7 +86,7 @@ namespace SmartRealms.API.Controllers
                 return BadRequest(result.Error);
             }
 
-            await _cache.RemoveData($"{userId}-cards");
+            await _cache.RemoveData($"{userId}-devices");
 
             return Ok(result.Value);
         }
@@ -103,7 +105,7 @@ namespace SmartRealms.API.Controllers
                 return BadRequest(result.Error);
             }
 
-            await _cache.RemoveData($"{deviceId}-cards");
+            await _cache.RemoveData($"{deviceId}-devices");
 
             return Ok(result.Value);
         }

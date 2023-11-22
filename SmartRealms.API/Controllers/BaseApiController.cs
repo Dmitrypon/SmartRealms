@@ -9,28 +9,31 @@ namespace SpaceCards.API.Controllers
 {
     
     {
-        protected Result<Guid> LocationId
-       {[ApiController]
+        protected Result<Guid> UserId
+    {
+        [ApiController]
         [Route("[controller]")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
         public class BaseApiController : ControllerBase
-        get
+
+                get
     {
-        var claim = HttpContext.Location.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
+        var claim = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
                 if (claim is null)
                 {
                     return Result.Failure<Guid>($"{nameof(claim)} cannot be null");
                 }
 
-                if (!Guid.TryParse(claim.Value, out var locationId))
+                if (!Guid.TryParse(claim.Value, out var userId))
                 {
-                    return Result.Failure<Guid>($"Cannot parse locactionId: {claim.Value}.");
+                    return Result.Failure<Guid>($"Cannot parse userId: {claim.Value}.");
                 }
 
-return locationId;
+return userId;
             }
         }
     }
 }
+
 

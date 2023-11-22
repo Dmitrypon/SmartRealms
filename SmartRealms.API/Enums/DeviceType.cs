@@ -1,13 +1,13 @@
 ﻿namespace SmartRealms.API.Enums
-{  
-        public enum DeviceType
-        {
-            Unknown,
-            Module,            
-            PLC
-        }
+{
+    public enum DeviceType
+    {
+        Unknown,
+        Module,
+        PLC
+    }
 
-        public enum DeviceTypes
+    public enum DeviceTypes
         {
             Unknown,
             PLC,
